@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { URL_API } from "../api/api";
+import { URL_API} from "../Api/api";
 
 import CardPacote from "../components/CardPacote";
 
