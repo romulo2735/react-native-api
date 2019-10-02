@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 export default class CardPacote extends Component {
   render(){
     const {onPress} = this.props;
-    const {id, nome, valor, dataInicio, dataFim} = this.state.detalhes;
+    const {id, nome, valor, dataInicio, dataFim} = this.props.detalhes;
 
     return (
         <TouchableWithoutFeedback onPress={ onPress }>
