@@ -26,7 +26,7 @@ export default class ListaPacote extends Component {
         <View>
           {
             pacotes.map( (pacotes, key) => (
-                <CardPacote key={key} datalhes={pacotes} onPress={()=> console.log('CARD DO PACOTE')} />
+                <CardPacote key={key} detalhes={pacotes} onPress={()=> console.log('CARD DO PACOTE')} />
             ))
           }
         </View>
