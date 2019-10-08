@@ -9,7 +9,9 @@ export default class DetalhePacote extends Component {
   };
 
   componentDidMount(){
-    fetch(`${ URL_API }pacote/13/detalhes`)
+    const {pacoteId} = this.props.match.params;
+
+    fetch(`${ URL_API }pacote/${pacoteId}/detalhes`)
         .then(T => T.json())
         .then(detalhe => this.setState({detalhe}))
         .catch(() => Alert.alert('Error', 'nao foi possivel recuperar o pacote'))
@@ -37,7 +39,7 @@ export default class DetalhePacote extends Component {
             <Text> Valor: { detalhe.pacote.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}) }</Text>
           </View>
 
-          <Button title='voltar' />
+          <Button title='voltar' onPress={()=> this.props.history.push('/')}/>
         </View>
     );
   }
