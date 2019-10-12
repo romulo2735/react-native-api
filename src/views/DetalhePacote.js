@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
 import { URL_API } from "../Api/api";
 import { Alert } from "react-native-web";
+import NavigationBar from "../components/NavigationBar";
 
 export default class DetalhePacote extends Component {
   state = {
@@ -11,9 +12,11 @@ export default class DetalhePacote extends Component {
   componentDidMount(){
     const {pacoteId} = this.props.match.params;
 
-    fetch(`${ URL_API }pacote/${pacoteId}/detalhes`)
+    fetch(`${ URL_API }pacote/${ pacoteId }/detalhes`)
         .then(T => T.json())
-        .then(detalhe => this.setState({detalhe}))
+        .then(detalhe => this.setState({
+          detalhe
+        }))
         .catch(() => Alert.alert('Error', 'nao foi possivel recuperar o pacote'))
   }
 
@@ -28,18 +31,22 @@ export default class DetalhePacote extends Component {
 
     return (
         <View style={ styles.container }>
-          <ImageBackground resizeMode='cover' style={ styles.image } source={ {uri: detalhe.urlImagem} }>
-            <Text> { detalhe.pacote.nome.upperCase } </Text>
-          </ImageBackground>
-
+          <NavigationBar goBack={() => this.props.history.push('/')} />
           <View>
-            <Text> Descrição: { detalhe.descricao }</Text>
-            <Text> Telefone: { detalhe.telefone }</Text>
-            <Text> Site: { detalhe.site }</Text>
-            <Text> Valor: { detalhe.pacote.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}) }</Text>
-          </View>
+            <ImageBackground resizeMode='cover' style={ styles.image } source={ {uri: detalhe.urlImagem} }>
+              <Text> { detalhe.pacote.nome.upperCase } </Text>
+            </ImageBackground>
 
-          <Button title='voltar' onPress={()=> this.props.history.push('/')}/>
+            <View>
+              <Text> Descrição: { detalhe.descricao }</Text>
+              <Text> Telefone: { detalhe.telefone }</Text>
+              <Text> Site: { detalhe.site }</Text>
+              <Text> Valor: { detalhe.pacote.valor.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+              }) }</Text>
+            </View>
+          </View>
         </View>
     );
   }
@@ -47,10 +54,7 @@ export default class DetalhePacote extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 0
   },
   image: {
     width: '100%',
