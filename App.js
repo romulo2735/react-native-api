@@ -9,7 +9,7 @@ export default class App extends Component {
   render(){
     return (
         <NativeRouter>
-          <View>
+          <View style={styles.container}>
             <Switch>
               <Route path='/:pacoteId' component={DetalhePacote}/>
               <Route component={ListaPacote}/>
@@ -19,3 +19,9 @@ export default class App extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+});
