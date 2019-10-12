@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { URL_API} from "../Api/api";
+import { URL_API } from "../Api/api";
+import NavigationBar from "../components/NavigationBar";
 
 import CardPacote from "../components/CardPacote";
 
 export default class ListaPacote extends Component {
   state = {
-    pacotes: undefined,
+    pacotes: [],
   };
 
   componentDidMount(){
@@ -17,18 +18,21 @@ export default class ListaPacote extends Component {
   }
 
   render(){
-    const { pacotes } = this.state;
+    const {pacotes} = this.state;
 
-    if(!pacotes){
+    if(!pacotes) {
       return <View/>
     }
     return (
         <View>
-          {
-            pacotes.map( (pacotes, key) => (
-                <CardPacote key={key} detalhes={pacotes} onPress={()=> this.props.history.push(`/${pacote.id}`)} />
-            ))
-          }
+          <NavigationBar />
+          <View>
+            {
+              pacotes.map((pacote, key) => (
+                  <CardPacote key={ key } detalhes={ pacote } onPress={ () => this.props.history.push(`${ pacote.id }`) }/>
+              ))
+            }
+          </View>
         </View>
     );
   }
