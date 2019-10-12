@@ -1,12 +1,29 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { DefaultTheme, Toolbar, ToolbarBackAction, ToolbarContent } from "react-native-paper";
+
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primaryColor: '#224DD0',
+    accentColor: '#F1C50F',
+  }
+};
 
 export default class NavigationBar extends Component {
   render(){
+    const {goBack} = this.props;
     return (
-        <View style={ styles.container }>
-          <Text>Open up App.js to start working on your app!</Text>
-        </View>
+        <Toolbar theme={theme}>
+          {
+            goBack&&(
+                <ToolbarBackAction onPress={ goBack }/>
+            )
+          }
+          <ToolbarContent title='GoTour'/>
+        </Toolbar>
     );
   }
 }
