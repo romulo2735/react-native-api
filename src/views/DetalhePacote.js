@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Linking, ImageBackground } from 'react-native';
 import { URL_API } from "../Api/api";
 import { Alert } from "react-native-web";
 import NavigationBar from "../components/NavigationBar";
@@ -20,6 +20,12 @@ export default class DetalhePacote extends Component {
         .catch(() => Alert.alert('Error', 'nao foi possivel recuperar o pacote'))
   }
 
+  openLink(url){
+    Linking.canOpenURL(url)
+        .then(supported => supported&&Linking.openURL(url))
+        .catch(err => console.error('Ocorreu um erro', err))
+  }
+
   render(){
     const {detalhe} = this.state;
 
@@ -31,7 +37,7 @@ export default class DetalhePacote extends Component {
 
     return (
         <View style={ styles.container }>
-          <NavigationBar goBack={() => this.props.history.push('/')} />
+          <NavigationBar goBack={ () => this.props.history.push('/') }/>
           <View>
             <ImageBackground resizeMode='cover' style={ styles.image } source={ {uri: detalhe.urlImagem} }>
               <Text> { detalhe.pacote.nome.upperCase } </Text>
@@ -39,8 +45,8 @@ export default class DetalhePacote extends Component {
 
             <View>
               <Text> Descrição: { detalhe.descricao }</Text>
-              <Text> Telefone: { detalhe.telefone }</Text>
-              <Text> Site: { detalhe.site }</Text>
+              <Text onPress={ () => this.openLink(`tel:${ detalhe.telefone }`) }> Telefone: { detalhe.telefone }</Text>
+              <Text onPress={ () => this.openLink(detalhe.site) }> Site: { detalhe.site }</Text>
               <Text> Valor: { detalhe.pacote.valor.toLocaleString('pt-BR', {
                 style: 'currency',
                 currency: 'BRL'
