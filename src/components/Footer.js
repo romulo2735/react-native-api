@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, PixelRatio } from 'react-native';
 
 export default class Footer extends Component {
   render(){
     return (
-        <View style={ styles.container }>
-          <Text>Open up App.js to start working on your app!</Text>
+        <View style={ styles.containerFooter }>
+          <Text style={styles.text}>http:://www.google.com</Text>
         </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  containerFooter: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    backgroundColor: '#1E42BA',
     justifyContent: 'center',
+    alignItems: 'center',
   },
+  text: {
+    color: 'black',
+    fontSize: 14 / PixelRatio.getFontScale(),
+    opacity: 0.8
+  }
 });
