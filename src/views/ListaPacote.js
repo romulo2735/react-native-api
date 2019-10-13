@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View, PixelRatio, ScrollView, Alert } from 'react-native';
 import { URL_API } from "../Api/api";
-import NavigationBar from "../components/NavigationBar";
 
+import NavigationBar from "../components/NavigationBar";
+import Footer from "../components/Footer";
 import CardPacote from "../components/CardPacote";
+import ImageTitle from "../components/ImageTitle";
 
 export default class ListaPacote extends Component {
   state = {
@@ -24,16 +26,49 @@ export default class ListaPacote extends Component {
       return <View/>
     }
     return (
-        <View>
-          <NavigationBar />
-          <View>
+        <View styles={ styles.containerListaPacote }>
+          <NavigationBar/>
+          <ScrollView>
+            <ImageTitle style={ styles.image }/>
             {
               pacotes.map((pacote, key) => (
-                  <CardPacote key={ key } detalhes={ pacote } onPress={ () => this.props.history.push(`${ pacote.id }`) }/>
+                  <CardPacote
+                      key={ key }
+                      detalhes={ pacote }
+                      onPress={ () => this.props.history.push(`${ pacote.id }`) }
+                  />
               ))
             }
-          </View>
+            {
+              pacotes.length === 0 &&(
+                  <Text style={styles.textWithoutItems}>
+                    Nenhum Pacote Encontrado
+                  </Text>
+              )
+            }
+          </ScrollView>
+          <Footer style={{ flex: 0.1 }} />
         </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  containerListaPacote: {
+    flex: 1,
+    justifyContent: 'space-around',
+  },
+  content: {
+    flex: 0.8,
+    flexDirection: 'column',
+    backgroundColor: '#224AD0'
+  },
+  image: {
+    marginBottom: 30,
+  },
+  textWithoutItems: {
+    fontSize: 15 / PixelRatio.getFontScale(),
+    textAlign: 'center',
+    color: '#FFF',
+  },
+});
